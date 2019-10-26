@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.weather.gson.Forecast;
 import com.example.weather.gson.Weather;
+import com.example.weather.service.AutoUpdateService;
 import com.example.weather.util.HttpUtil;
 import com.example.weather.util.Utility;
 
@@ -136,7 +138,7 @@ public class WeatherActivity extends AppCompatActivity {
     * 根据天气id请求城市信息
     * */
     public void requestWeather(final String weatherId) {
-        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=cc575590c9964947955019eb40a737a2";
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -210,6 +212,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     /* *
